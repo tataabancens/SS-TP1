@@ -10,7 +10,12 @@ public class App {
         // Locating inputs.txt in resources
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         InputStream is = classloader.getResourceAsStream("inputs.txt");
+        if (is == null) {
+            System.out.println("File not found");
+            System.exit(1);
+        }
 
+        // Initiate setup
         Scanner scanner = new Scanner(is);
         SimulationHandler simulationHandler = new SimulationHandler();
 
@@ -26,5 +31,8 @@ public class App {
 
         // Create and stores N particles
         simulationHandler.generateParticles();
+
+        // Show particle data
+        simulationHandler.printParticles();
     }
 }
