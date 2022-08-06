@@ -19,20 +19,39 @@ public class App {
         Scanner scanner = new Scanner(is);
         SimulationHandler simulationHandler = new SimulationHandler();
 
-        // Read N value
-        if (scanner.hasNextLine()) {
-            simulationHandler.setN(Integer.parseInt(scanner.next()));
-        }
-
-        // Read L value
-        if (scanner.hasNextLine()) {
-            simulationHandler.setL(Integer.parseInt(scanner.next()));
-        }
+        // Reads txt
+        App.readTxt(simulationHandler, scanner);
 
         // Create and stores N particles
         simulationHandler.generateParticles();
 
         // Show particle data
         simulationHandler.printParticles();
+
+        // Calculate M
+        simulationHandler.calculateM();
+
+        simulationHandler.cellIndexMethod();
+    }
+
+    public static void readTxt(SimulationHandler simulationHandler, Scanner scanner) {
+        // Read N value
+        if (scanner.hasNextLine()) {
+            String in = scanner.next();
+            simulationHandler.setN(Integer.parseInt(scanner.next()));
+            System.out.println(in + " " + simulationHandler.getN());
+        }
+        // Read L value
+        if (scanner.hasNextLine()) {
+            String in = scanner.next();
+            simulationHandler.setL(Integer.parseInt(scanner.next()));
+            System.out.println(in + " " + simulationHandler.getL());
+        }
+        // Read rc value
+        if (scanner.hasNextLine()) {
+            String in = scanner.next();
+            simulationHandler.setRc(Float.parseFloat(scanner.next()));
+            System.out.println(in + " " + simulationHandler.getRc());
+        }
     }
 }

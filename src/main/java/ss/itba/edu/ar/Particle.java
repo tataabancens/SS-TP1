@@ -1,11 +1,14 @@
 package ss.itba.edu.ar;
 
+import java.util.Objects;
+
 public class Particle {
     private float rc;
     private float radius;
     private float x;
     private float y;
     private int id;
+    private int cellNumber;
 
     public Particle(float rc, float radius, float x, float y, int id) {
         this.rc = rc;
@@ -17,7 +20,7 @@ public class Particle {
 
     @Override
     public String toString() {
-        return String.format("Im particle %d pos[%f, %f]", id, x, y);
+        return String.format("Id %d pos[%.2f, %.2f] rc %.2f radius %.2f", id, x, y, rc, radius);
     }
 
     public float getRc() {
@@ -50,5 +53,34 @@ public class Particle {
 
     public void setY(float y) {
         this.y = y;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCellNumber() {
+        return cellNumber;
+    }
+
+    public void setCellNumber(int cellNumber) {
+        this.cellNumber = cellNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Particle particle = (Particle) o;
+        return id == particle.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

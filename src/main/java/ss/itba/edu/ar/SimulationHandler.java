@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class SimulationHandler {
     private int N;
-    private int L;
+    private float L;
     private int M;
     private float rc;
     private int particleCount;
@@ -16,7 +16,9 @@ public class SimulationHandler {
     SimulationHandler() {
         // Default
         particleCount = 0;
+        M = 1;
     }
+
     public void generateParticles() {
         Random r = new Random();
         for (int i = 0; i < N; i++) {
@@ -31,6 +33,31 @@ public class SimulationHandler {
             System.out.println(particle);
         }
     }
+
+    public void calculateM() {
+        while(L / M > rc) {
+            M++;
+        }
+        M--;
+    }
+
+    public void cellIndexMethod() {
+        List<List<Particle>> cells = new ArrayList<>(M * M);
+        for (int i = 0; i < M * M; i++) {
+            cells.add(new ArrayList<>());
+        }
+        for (Particle particle: particlesList) {
+            cells.get(getCellIndex(particle)).add(particle);
+        }
+    }
+
+    private int getCellIndex(Particle particle) {
+        int xOffset = (int)Math.floor((particle.getX() * M) / L);
+        int yOffset = (int)Math.floor((particle.getY() * M) / L) * M;
+        particle.setCellNumber(xOffset + yOffset);
+        return  xOffset + yOffset;
+    }
+
 
     public float getRc() {
         return rc;
@@ -48,7 +75,7 @@ public class SimulationHandler {
         N = n;
     }
 
-    public int getL() {
+    public float getL() {
         return L;
     }
 
@@ -63,6 +90,4 @@ public class SimulationHandler {
     public void setM(int m) {
         M = m;
     }
-
-
 }
