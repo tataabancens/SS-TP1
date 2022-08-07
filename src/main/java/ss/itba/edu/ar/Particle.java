@@ -27,7 +27,15 @@ public class Particle {
 
     @Override
     public String toString() {
-        return String.format("Id %d pos[%.2f, %.2f] rc %.2f cellX %d cellY %d", id, x, y, rc, cellX, cellY);
+        return String.format("Id %d pos[%.2f, %.2f] rc %.2f cellX %d cellY %d neighbours: %s", id, x, y, rc, cellX, cellY, strNeighbours());
+    }
+
+    public String strNeighbours() {
+        StringBuilder toRet = new StringBuilder();
+        for (Particle p : neighbours) {
+            toRet.append(p.getId()).append(" ");
+        }
+        return toRet.toString();
     }
 
     public Set<Particle> getNeighbours() {
@@ -116,6 +124,17 @@ public class Particle {
     }
 
     public void checkNeighbours(List<Particle> particles) {
-        // WIP calculate distance for each neighbor and add to set, check if not already calculated distance
+        // Calculate distance for each neighbor and add to set, check if not already calculated distance
+        for (Particle p : particles) {
+            if (!p.equals(this)) {
+                if (p.getNeighbours().contains(this) || isInRange(p)) {
+                    neighbours.add(p);
+                }
+            }
+        }
+    }
+    public boolean isInRange(Particle p) {
+        // TODO: Add particle radius into account
+        return Math.sqrt(Math.pow(p.getX() - getX(), 2) + Math.pow(p.getY() - getY(), 2)) <= getRc();
     }
 }

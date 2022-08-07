@@ -55,11 +55,22 @@ public class SimulationHandler {
         }
 
         for (Particle p : particlesList) {
-            if (p.getCellX() > 0 && p.getCellX() < M && p.getCellY() > 0 && p.getCellY() < M) {
-                for (int i = p.getCellX() - 1; i < M; i++) {
-                    for (int j = p.getCellY() - 1; j < M; j++) {
-                        p.checkNeighbours(cells.get(i + j * M));
-                    }
+            // This method works with non-periodic contours
+            // TODO: Add an alternative for periodic contours
+            int xIndex, yIndex;
+            if (p.getCellX() == 0) {
+                xIndex = 0;
+            } else {
+                xIndex = p.getCellX() - 1;
+            }
+            if (p.getCellY() == 0) {
+                yIndex = 0;
+            } else {
+                yIndex = p.getCellY() - 1;
+            }
+            for (int i = xIndex; i < M; i++) {
+                for (int j = yIndex; j < M; j++) {
+                    p.checkNeighbours(cells.get(i + j * M));
                 }
             }
         }
