@@ -10,6 +10,7 @@ public class SimulationHandler {
     private int M;
     private float rc;
     private int particleCount;
+    private boolean periodicContours;
 
     List<Particle> particlesList = new ArrayList<>();
 
@@ -17,6 +18,7 @@ public class SimulationHandler {
         // Default
         particleCount = 0;
         M = 1;
+        periodicContours = false;
     }
 
     public void generateParticles() {
@@ -71,6 +73,20 @@ public class SimulationHandler {
             for (int i = xIndex; i < M; i++) {
                 for (int j = yIndex; j < M; j++) {
                     p.checkNeighbours(cells.get(i + j * M));
+                }
+            }
+            if (periodicContours) {
+                if (p.getCellX() == 0) {
+                    p.checkPeriodicNeighbour(cells.get(M - 1 + M * p.getCellY()), L, Direction.LEFT);
+                }
+                if (p.getCellX() == M - 1) {
+                    p.checkPeriodicNeighbour(cells.get(M * p.getCellY()), L, Direction.RIGHT);
+                }
+                if (p.getCellY() == 0) {
+                    p.checkPeriodicNeighbour(cells.get(M - 1 + M * p.getCellX()), L, Direction.UP);
+                }
+                if (p.getCellY() == M - 1) {
+                    p.checkPeriodicNeighbour(cells.get(M * p.getCellX()), L, Direction.DOWN);
                 }
             }
         }

@@ -25,6 +25,11 @@ public class Particle {
         neighbours = new HashSet<>();
     }
 
+    Particle(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
     @Override
     public String toString() {
         return String.format("Id %d pos[%.2f, %.2f] rc %.2f cellX %d cellY %d neighbours: %s", id, x, y, rc, cellX, cellY, strNeighbours());
@@ -136,5 +141,13 @@ public class Particle {
     public boolean isInRange(Particle p) {
         // TODO: Add particle radius into account
         return Math.sqrt(Math.pow(p.getX() - getX(), 2) + Math.pow(p.getY() - getY(), 2)) <= getRc();
+    }
+
+    public void checkPeriodicNeighbour(List<Particle> particles, float L, Direction dir) {
+        for (Particle p : particles) {
+            if (p.getNeighbours().contains(this) || isInRange(new Particle(p.getX() + dir.getX() * L, p.getY() + dir.getY() * L))) {
+                neighbours.add(p);
+            }
+        }
     }
 }
