@@ -13,7 +13,7 @@ public class SimulationHandler {
 
     List<Particle> particlesList = new ArrayList<>();
 
-    SimulationHandler() {
+    public SimulationHandler() {
         // Default
         particleCount = 0;
         M = 1;
@@ -35,7 +35,7 @@ public class SimulationHandler {
     }
 
     public void calculateM() {
-        while(L / M > rc) {
+        while(L / M >= rc) {
             M++;
         }
         M--;
@@ -47,17 +47,23 @@ public class SimulationHandler {
             cells.add(new ArrayList<>());
         }
         for (Particle particle: particlesList) {
-            cells.get(getCellIndex(particle)).add(particle);
+            // Calculates cell coordinates and stores them in particle
+            particle.setCellCoords(M, L);
+
+            // Adds the particle to de corresponding cell
+            cells.get(particle.getCellX() + particle.getCellY() * M).add(particle);
+        }
+
+        for (Particle p : particlesList) {
+            if (p.getCellX() > 0 && p.getCellX() < M && p.getCellY() > 0 && p.getCellY() < M) {
+                for (int i = p.getCellX() - 1; i < M; i++) {
+                    for (int j = p.getCellY() - 1; j < M; j++) {
+                        p.checkNeighbours(cells.get(i + j * M));
+                    }
+                }
+            }
         }
     }
-
-    private int getCellIndex(Particle particle) {
-        int xOffset = (int)Math.floor((particle.getX() * M) / L);
-        int yOffset = (int)Math.floor((particle.getY() * M) / L) * M;
-        particle.setCellNumber(xOffset + yOffset);
-        return  xOffset + yOffset;
-    }
-
 
     public float getRc() {
         return rc;

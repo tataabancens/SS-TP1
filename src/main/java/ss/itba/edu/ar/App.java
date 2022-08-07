@@ -25,13 +25,14 @@ public class App {
         // Create and stores N particles
         simulationHandler.generateParticles();
 
-        // Show particle data
-        simulationHandler.printParticles();
-
         // Calculate M
         simulationHandler.calculateM();
 
+        // Calculate neighbours distances
         simulationHandler.cellIndexMethod();
+
+        // Show particle data
+        simulationHandler.printParticles();
     }
 
     public static void readTxt(SimulationHandler simulationHandler, Scanner scanner) {
