@@ -139,8 +139,7 @@ public class Particle {
         }
     }
     public boolean isInRange(Particle p) {
-        // TODO: Add particle radius into account
-        return Math.sqrt(Math.pow(p.getX() - getX(), 2) + Math.pow(p.getY() - getY(), 2)) <= getRc();
+        return Math.sqrt(Math.pow(p.getX() - getX(), 2) + Math.pow(p.getY() - getY(), 2)) <= getRc() + getRadius() + p.getRadius();
     }
 
     public void checkPeriodicNeighbour(List<Particle> particles, float L, Direction dir) {

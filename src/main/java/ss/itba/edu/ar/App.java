@@ -1,8 +1,15 @@
 package ss.itba.edu.ar;
 
-import java.io.File;
-import java.io.InputStream;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
+
+import static ss.itba.edu.ar.ParticleFormatUtil.*;
 
 public class App {
     public static void main( String[] args ) throws Exception{
@@ -25,14 +32,36 @@ public class App {
         // Create and stores N particles
         simulationHandler.generateParticles();
 
+        // Store particles positions
+        String positionsFilePath = "python/positions.csv"; // LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+        App.writeToFile(positionsFilePath, positionsToCsvFormat(simulationHandler.getParticlesList()));
+
         // Calculate M
         simulationHandler.calculateM();
 
         // Calculate neighbours distances
         simulationHandler.cellIndexMethod();
 
+        // Store results
+        String filePath = "python/neighbours.json"; // LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+        App.writeToFile(filePath, particleNeighboursJSON(simulationHandler.getParticlesList()));
+
         // Show particle data
         simulationHandler.printParticles();
+    }
+
+    private static void writeToFile(String filepath, String toWrite) {
+        try {
+            FileWriter fw = new FileWriter(filepath, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            pw.print(toWrite);
+            pw.flush();
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Failed");
+        }
     }
 
     public static void readTxt(SimulationHandler simulationHandler, Scanner scanner) {

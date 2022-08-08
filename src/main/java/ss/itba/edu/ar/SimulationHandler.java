@@ -37,28 +37,45 @@ public class SimulationHandler {
     }
 
     public void calculateM() {
-        while(L / M >= rc) {
+        float maxRadius = 0.0f;
+        for(Particle p : getParticlesList()) {
+            if (p.getRadius() > maxRadius) {
+                maxRadius = p.getRadius();
+            }
+        }
+        while(L / M >= rc + 2 * maxRadius) {
             M++;
         }
         M--;
     }
 
-    public void cellIndexMethod() {
-        List<List<Particle>> cells = new ArrayList<>(M * M);
-        for (int i = 0; i < M * M; i++) {
+
+
+    public List<Particle> getParticlesList() {
+        return particlesList;
+    }
+
+    public List<List<Particle>> cellIndexMethodSetup() {
+        List<List<Particle>> cells = new ArrayList<>(getM() * getM());
+        for (int i = 0; i < getM() * getM(); i++) {
             cells.add(new ArrayList<>());
         }
-        for (Particle particle: particlesList) {
+        for (Particle particle: getParticlesList()) {
             // Calculates cell coordinates and stores them in particle
-            particle.setCellCoords(M, L);
+            particle.setCellCoords(getM(), getL());
 
             // Adds the particle to de corresponding cell
-            cells.get(particle.getCellX() + particle.getCellY() * M).add(particle);
+            cells.get(particle.getCellX() + particle.getCellY() * getM()).add(particle);
         }
+        return cells;
+    }
 
-        for (Particle p : particlesList) {
+    public void cellIndexMethod() {
+
+        List<List<Particle>> cells = cellIndexMethodSetup();
+
+        for (Particle p : getParticlesList()) {
             // This method works with non-periodic contours
-            // TODO: Add an alternative for periodic contours
             int xIndex, yIndex;
             if (p.getCellX() == 0) {
                 xIndex = 0;
@@ -75,6 +92,8 @@ public class SimulationHandler {
                     p.checkNeighbours(cells.get(i + j * M));
                 }
             }
+            // Add an alternative for periodic contours
+            // TODO: Check if this is working
             if (periodicContours) {
                 if (p.getCellX() == 0) {
                     p.checkPeriodicNeighbour(cells.get(M - 1 + M * p.getCellY()), L, Direction.LEFT);
