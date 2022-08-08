@@ -9,8 +9,9 @@ public class ParticleFormatUtil {
 
     public static String positionsToCsvFormat(List<Particle> particleList) {
         StringBuilder sb = new StringBuilder();
+        sb.append("id,x,y\n");
         for (Particle p : particleList) {
-            sb.append(p.getX()).append(",").append(p.getY()).append("\n");
+            sb.append(p.getId()).append(',').append(p.getX()).append(",").append(p.getY()).append("\n");
         }
         return sb.toString();
     }
