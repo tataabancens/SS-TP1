@@ -73,22 +73,12 @@ public class SimulationHandler {
     public void cellIndexMethod() {
 
         List<List<Particle>> cells = cellIndexMethodSetup();
-
         for (Particle p : getParticlesList()) {
-            // This method works with non-periodic contours
-            int xIndex, yIndex;
-            if (p.getCellX() == 0) {
-                xIndex = 0;
-            } else {
-                xIndex = p.getCellX() - 1;
-            }
-            if (p.getCellY() == 0) {
-                yIndex = 0;
-            } else {
-                yIndex = p.getCellY() - 1;
-            }
-            for (int i = xIndex; i < M; i++) {
-                for (int j = yIndex; j < M; j++) {
+            // Sets an object with the corresponding xy indexes
+            NeighbourCells nc = new NeighbourCells(p, M);
+
+            for (int i = nc.xStart; i < nc.xEnd; i++) {
+                for (int j = nc.yStart; j < nc.yEnd; j++) {
                     p.checkNeighbours(cells.get(i + j * M));
                 }
             }
@@ -107,6 +97,37 @@ public class SimulationHandler {
                 if (p.getCellY() == M - 1) {
                     p.checkPeriodicNeighbour(cells.get(M * p.getCellX()), L, Direction.DOWN);
                 }
+            }
+        }
+    }
+
+    private static class NeighbourCells {
+        int xStart, xEnd, yStart, yEnd;
+
+        public NeighbourCells(Particle p, int M) {
+            // set xStart
+            if (p.getCellX() == 0) {
+                xStart = 0;
+            } else {
+                xStart = p.getCellX() - 1;
+            }
+            // Set xEnd
+            if (p.getCellX() == M - 1) {
+                xEnd = M;
+            } else {
+                xEnd = p.getCellX() + 1;
+            }
+            // Set yStart
+            if (p.getCellY() == 0) {
+                yStart = 0;
+            } else {
+                yStart = p.getCellY() - 1;
+            }
+            // Set yEnd
+            if (p.getCellY() == M - 1) {
+                yEnd = M;
+            } else {
+                yEnd = p.getCellY() + 1;
             }
         }
     }
