@@ -11,7 +11,7 @@ ids = df['id'].tolist()
 
 # id = int(input("Select a point: "))
 
-myId = 0
+myId = 1000
 
 dfNeighbours = pd.read_json('neighbours.json')
 
@@ -21,8 +21,11 @@ neighbours = dfNeighbours.to_dict()
 
 fig, ax = plt.subplots()
 
+circle = plt.Circle((x[myId], y[myId]), 2.0, fill = False)
+
 ax.scatter(x, y)
 ax.scatter(x[myId], y[myId], color='g')
+ax.add_artist(circle)
 
 xneigh = []
 yneigh = []

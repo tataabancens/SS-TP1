@@ -132,14 +132,15 @@ public class Particle {
         // Calculate distance for each neighbor and add to set, check if not already calculated distance
         for (Particle p : particles) {
             if (!p.equals(this)) {
-                if (p.getNeighbours().contains(this) || isInRange(p)) {
+                if (!neighbours.contains(p) && isInRange(p)) {
                     neighbours.add(p);
+                    p.getNeighbours().add(this);
                 }
             }
         }
     }
     public boolean isInRange(Particle p) {
-        return Math.sqrt(Math.pow(p.getX() - getX(), 2) + Math.pow(p.getY() - getY(), 2)) <= getRc() + getRadius() + p.getRadius();
+        return Math.sqrt(Math.pow(p.getX() - getX(), 2) + Math.pow(p.getY() - getY(), 2)) < getRc() + getRadius() + p.getRadius();
     }
 
     public void checkPeriodicNeighbour(List<Particle> particles, float L, Direction dir) {
