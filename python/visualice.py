@@ -11,7 +11,7 @@ ids = df['id'].tolist()
 
 # id = int(input("Select a point: "))
 
-myId = 1000
+myId = 1003
 
 dfNeighbours = pd.read_json('neighbours.json')
 
@@ -38,5 +38,9 @@ for id in ids:
         yneigh.append(y[id])
 
 ax.scatter(xneigh, yneigh, color='r')
-ax.grid()
+ax.set_yticks([2.5, 5.0, 7.5], minor=False)
+ax.set_xticks([2.5, 5.0, 7.5], minor=False)
+ax.yaxis.grid(True)
+ax.xaxis.grid(True)
+ax.set_box_aspect(1)
 plt.show()

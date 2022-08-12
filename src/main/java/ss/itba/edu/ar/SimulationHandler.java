@@ -71,7 +71,6 @@ public class SimulationHandler {
     }
 
     public void cellIndexMethod() {
-
         List<List<Particle>> cells = cellIndexMethodSetup();
         for (Particle p : getParticlesList()) {
             // Sets an object with the corresponding xy indexes
@@ -109,13 +108,13 @@ public class SimulationHandler {
             if (p.getCellX() == 0) {
                 xStart = 0;
             } else {
-                xStart = p.getCellX() - 1;
+                xStart = p.getCellX();
             }
             // Set xEnd
             if (p.getCellX() == M - 1) {
                 xEnd = M;
             } else {
-                xEnd = p.getCellX() + 1;
+                xEnd = p.getCellX() + 2;
             }
             // Set yStart
             if (p.getCellY() == 0) {
@@ -127,7 +126,7 @@ public class SimulationHandler {
             if (p.getCellY() == M - 1) {
                 yEnd = M;
             } else {
-                yEnd = p.getCellY() + 1;
+                yEnd = p.getCellY() + 2;
             }
         }
     }
