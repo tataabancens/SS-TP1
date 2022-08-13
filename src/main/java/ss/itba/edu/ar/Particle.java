@@ -32,7 +32,7 @@ public class Particle {
 
     @Override
     public String toString() {
-        return String.format("Id %d pos[%.2f, %.2f] rc %.2f cellX %d cellY %d neighbours: %s", id, x, y, rc, cellX, cellY, strNeighbours());
+        return String.format("Id %d pos[%.2f, %.2f] rc %.2f cellX %d cellY %d", id, x, y, rc, cellX, cellY);
     }
 
     public String strNeighbours() {

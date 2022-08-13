@@ -84,47 +84,64 @@ public class SimulationHandler {
             // Add an alternative for periodic contours
             // TODO: Check if this is working
             if (periodicContours) {
+                // Bottom left corner
+                if (p.getCellX() == 0 && p.getCellY() == 0) {
+                    p.checkPeriodicNeighbour(cells.get(M * M - 1), L, Direction.DOWN_LEFT);
+                    p.checkPeriodicNeighbour(cells.get(M - 1), L, Direction.LEFT);
+                    p.checkPeriodicNeighbour(cells.get(M + M - 1), L, Direction.LEFT);
+                    p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX() + 1), L, Direction.DOWN);
+                    p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX()), L, Direction.DOWN);
+                    continue;
+                }
+                // Top left corner
+                if (p.getCellX() == 0 && p.getCellY() == M - 1) {
+                    p.checkPeriodicNeighbour(cells.get(M - 1), L, Direction.UP_LEFT);
+                    p.checkPeriodicNeighbour(cells.get((M - 2) * M + M - 1), L, Direction.LEFT);
+                    p.checkPeriodicNeighbour(cells.get(M * M - 1), L, Direction.LEFT);
+                    p.checkPeriodicNeighbour(cells.get(p.getCellX() + 1), L, Direction.UP);
+                    p.checkPeriodicNeighbour(cells.get(p.getCellX()), L, Direction.UP);
+                    continue;
+                }
+                // bottom right corner
+                if (p.getCellX() == M - 1 && p.getCellY() == 0) {
+                    p.checkPeriodicNeighbour(cells.get(M * M - M), L, Direction.DOWN_RIGHT);
+                    p.checkPeriodicNeighbour(cells.get(0), L, Direction.RIGHT);
+                    p.checkPeriodicNeighbour(cells.get(M), L, Direction.RIGHT);
+                    p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX() - 1), L, Direction.DOWN);
+                    p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX()), L, Direction.DOWN);
+                    continue;
+                }
+                // Top right corner
+                if (p.getCellX() == M - 1 && p.getCellY() == M - 1) {
+                    p.checkPeriodicNeighbour(cells.get(0), L, Direction.UP_RIGHT);
+                    p.checkPeriodicNeighbour(cells.get((M - 1) * M), L, Direction.RIGHT);
+                    p.checkPeriodicNeighbour(cells.get((M - 2) * M), L, Direction.RIGHT);
+                    p.checkPeriodicNeighbour(cells.get(p.getCellX() - 1), L, Direction.UP);
+                    p.checkPeriodicNeighbour(cells.get(p.getCellX()), L, Direction.UP);
+                    continue;
+                }
+                // Left side cells
                 if (p.getCellX() == 0) {
                     p.checkPeriodicNeighbour(cells.get(M - 1 + M * p.getCellY()), L, Direction.LEFT);
-                    if (p.getCellY() == M - 1) {
-                        p.checkPeriodicNeighbour(cells.get(M - 1), L, Direction.UP_LEFT);
-                        p.checkPeriodicNeighbour(cells.get((p.getCellY() - 1) * M + M - 1), L, Direction.LEFT);
-                        p.checkPeriodicNeighbour(cells.get(p.getCellX() + 1), L, Direction.UP);
-                        p.checkPeriodicNeighbour(cells.get(p.getCellX()), L, Direction.UP);
-                    } else if (p.getCellY() == 0) {
-                        p.checkPeriodicNeighbour(cells.get(M * M - 1), L, Direction.DOWN_LEFT);
-                        p.checkPeriodicNeighbour(cells.get((p.getCellY() + 1) * M + M - 1), L, Direction.LEFT);
-                        p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX() + 1), L, Direction.DOWN);
-                        p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX()), L, Direction.DOWN);
-                    } else {
-                        p.checkPeriodicNeighbour(cells.get((p.getCellY() - 1) * M + M - 1), L, Direction.LEFT);
-                        p.checkPeriodicNeighbour(cells.get((p.getCellY() + 1) * M + M - 1), L, Direction.LEFT);
-                    }
+                    p.checkPeriodicNeighbour(cells.get((p.getCellY() - 1) * M + M - 1), L, Direction.LEFT);
+                    p.checkPeriodicNeighbour(cells.get((p.getCellY() + 1) * M + M - 1), L, Direction.LEFT);
                     continue;
                 }
+                // Right side cells
                 if (p.getCellX() == M - 1) {
                     p.checkPeriodicNeighbour(cells.get(M * p.getCellY()), L, Direction.RIGHT);
-                    if (p.getCellY() == M - 1) {
-                        p.checkPeriodicNeighbour(cells.get(0), L, Direction.UP_RIGHT);
-                        p.checkPeriodicNeighbour(cells.get((p.getCellY() - 1) * M), L, Direction.RIGHT);
-                        p.checkPeriodicNeighbour(cells.get(p.getCellX() - 1), L, Direction.UP);
-                        p.checkPeriodicNeighbour(cells.get(p.getCellX()), L, Direction.UP);
-                    } else if (p.getCellY() == 0) {
-                        p.checkPeriodicNeighbour(cells.get(M * M - M), L, Direction.DOWN_RIGHT);
-                        p.checkPeriodicNeighbour(cells.get((p.getCellY() + 1) * M), L, Direction.RIGHT);
-                        p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX() - 1), L, Direction.DOWN);
-                        p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX()), L, Direction.DOWN);
-                    } else {
-                        p.checkPeriodicNeighbour(cells.get((p.getCellY() - 1) * M), L, Direction.RIGHT);
-                        p.checkPeriodicNeighbour(cells.get((p.getCellY() + 1) * M), L, Direction.RIGHT);
-                    }
+                    p.checkPeriodicNeighbour(cells.get((p.getCellY() - 1) * M), L, Direction.RIGHT);
+                    p.checkPeriodicNeighbour(cells.get((p.getCellY() + 1) * M), L, Direction.RIGHT);
                     continue;
                 }
+                // Top side cells
                 if (p.getCellY() == 0) {
                     p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX()), L, Direction.DOWN);
                     p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX() - 1), L, Direction.DOWN);
                     p.checkPeriodicNeighbour(cells.get((M - 1) * M + p.getCellX() + 1), L, Direction.DOWN);
+                    continue;
                 }
+                // Bottom side cells
                 if (p.getCellY() == M - 1) {
                     p.checkPeriodicNeighbour(cells.get(p.getCellX()), L, Direction.UP);
                     p.checkPeriodicNeighbour(cells.get(p.getCellX() + 1), L, Direction.UP);
