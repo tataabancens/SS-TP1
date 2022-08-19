@@ -40,16 +40,18 @@ public class App {
         simulationHandler.calculateM();
 
         if(simulationHandler.isTest()){
-            int[] N = new int[30];
-            long[] times = new long[30];
-            for(int i=1; i<11;i++){
-                N[i-1] = 1000*i;
-                simulationHandler.setN(N[i-1]);
+            int[] N = new int[10];
+            long[] cellIndexTimes = new long[10];
+            long[] bruteForceTimes = new long[10];
+            for(int i=0; i<10;i++){
+                N[i] = 500*(i+1);
+                simulationHandler.setN(N[i]);
                 simulationHandler.generateParticles();
-                times[i-1] = simulationHandler.testExecutionTime(true);
+                cellIndexTimes[i] = simulationHandler.testExecutionTime(true);
+                bruteForceTimes[i] = simulationHandler.testExecutionTime(false);
             }
             String testFilePath = "python/test_results.csv";
-            App.writeToFile(testFilePath, testResultToCsvFormat(N,times));
+            App.writeToFile(testFilePath, testResultToCsvFormat(N,cellIndexTimes,bruteForceTimes));
         }else{
             // Calculate neighbours distances
             simulationHandler.cellIndexMethod();

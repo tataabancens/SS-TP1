@@ -31,11 +31,11 @@ public class ParticleFormatUtil {
         return arr.toJSONString();
     }
 
-    public static String testResultToCsvFormat(int[] particleCount, long[] times) {
+    public static String testResultToCsvFormat(int[] particleCount, long[] cellIndexTimes, long[] bruteForceTimes) {
         StringBuilder sb = new StringBuilder();
-        sb.append("N,time1,time2,time3,time4\n");
+        sb.append("N,CellIndexTime(ms),BruteForceTime(ms)\n");
         for (int i = 0; i < particleCount.length; i++) {
-            sb.append(particleCount[i]).append(',').append(times[i]).append("\n");
+            sb.append(particleCount[i]).append(',').append(cellIndexTimes[i]).append(',').append(bruteForceTimes[i]).append("\n");
         }
         return sb.toString();
     }

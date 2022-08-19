@@ -49,7 +49,10 @@ public class SimulationHandler {
             long delta = System.currentTimeMillis()-t0;
             return delta;
         }else{
-            return 0;
+            long t0 =System.currentTimeMillis();
+            bruteForce();
+            long delta = System.currentTimeMillis()-t0;
+            return delta;
         }
     }
 
@@ -86,7 +89,18 @@ public class SimulationHandler {
         }
         return cells;
     }
-
+    public void bruteForce(){
+        for (Particle p1: particlesList){
+            for(Particle p2 : particlesList){
+                if(!p1.equals(p2) && !p1.getNeighbours().contains(p2)){
+                    if(p1.isInRange(p2)){
+                        p1.addNeighbor(p2);
+                        p2.addNeighbor(p1);
+                    }
+                }
+            }
+        }
+    }
     public void cellIndexMethod() {
         List<List<Particle>> cells = cellIndexMethodSetup();
         for (Particle p : getParticlesList()) {

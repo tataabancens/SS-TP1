@@ -107,6 +107,7 @@ public class Particle {
         this.cellY = cellY;
     }
 
+    public void addNeighbor(Particle p){this.neighbours.add(p);}
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,6 +140,7 @@ public class Particle {
             }
         }
     }
+
     public boolean isInRange(Particle p) {
         return Math.sqrt(Math.pow(p.getX() - getX(), 2) + Math.pow(p.getY() - getY(), 2)) < getRc() + getRadius() + p.getRadius();
     }
