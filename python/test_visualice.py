@@ -19,6 +19,6 @@ plt.xlabel("Particles")
 
 ax.plot(N, cellIndexTimes, label='cell index', linewidth=2.0,color = 'g')
 ax.plot(N,bruteForceTimes, label='brute force', linewidth=2.0,color = 'r')
-
+plt.legend()
 
 plt.show()
