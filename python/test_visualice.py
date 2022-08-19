@@ -14,8 +14,11 @@ bruteForceTimes = df['BruteForceTime(ms)'].tolist()
 # plot
 fig, ax = plt.subplots()
 
-ax.plot(N, cellIndexTimes, linewidth=2.0,color = 'g')
-ax.plot(N,bruteForceTimes, linewidth=2.0,color = 'r')
+plt.ylabel("time(ms)")
+plt.xlabel("Particles")
+
+ax.plot(N, cellIndexTimes, label='cell index', linewidth=2.0,color = 'g')
+ax.plot(N,bruteForceTimes, label='brute force', linewidth=2.0,color = 'r')
 
 
 plt.show()
