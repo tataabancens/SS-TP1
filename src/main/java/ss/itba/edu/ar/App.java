@@ -39,15 +39,29 @@ public class App {
         // Calculate M
         simulationHandler.calculateM();
 
-        // Calculate neighbours distances
-        simulationHandler.cellIndexMethod();
+        if(simulationHandler.isTest()){
+            int[] N = new int[30];
+            long[] times = new long[30];
+            for(int i=1; i<11;i++){
+                N[i-1] = 1000*i;
+                simulationHandler.setN(N[i-1]);
+                simulationHandler.generateParticles();
+                times[i-1] = simulationHandler.testExecutionTime(true);
+            }
+            String testFilePath = "python/test_results.csv";
+            App.writeToFile(testFilePath, testResultToCsvFormat(N,times));
+        }else{
+            // Calculate neighbours distances
+            simulationHandler.cellIndexMethod();
 
-        // Store results
-        String filePath = "python/neighbours.json"; // LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
-        App.writeToFile(filePath, particleNeighboursJSON(simulationHandler.getParticlesList()));
 
-        // Show particle data
-        simulationHandler.printParticles();
+            // Store results
+            String filePath = "python/neighbours.json"; // LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+            App.writeToFile(filePath, particleNeighboursJSON(simulationHandler.getParticlesList()));
+
+            // Show particle data
+            simulationHandler.printParticles();
+        }
     }
 
     private static void writeToFile(String filepath, String toWrite) {
@@ -82,6 +96,11 @@ public class App {
             String in = scanner.next();
             simulationHandler.setRc(Float.parseFloat(scanner.next()));
             System.out.println(in + " " + simulationHandler.getRc());
+        }
+        if(scanner.hasNextLine()){
+            String in = scanner.next();
+            simulationHandler.setTest(Boolean.parseBoolean(scanner.next()));
+            System.out.println(in + " " + simulationHandler.isTest());
         }
     }
 }

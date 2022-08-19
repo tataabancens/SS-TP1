@@ -1,6 +1,7 @@
 package ss.itba.edu.ar;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -9,6 +10,7 @@ public class SimulationHandler {
     private float L;
     private int M;
     private float rc;
+    private boolean test;
     private int particleCount;
     private boolean periodicContours;
 
@@ -33,6 +35,21 @@ public class SimulationHandler {
     public void printParticles() {
         for (Particle particle : particlesList) {
             System.out.println(particle);
+        }
+    }
+
+    public long testExecutionTime(boolean algorithm){
+        for(Particle particle : particlesList){
+            particle.setNeighbours(new HashSet<>());
+        }
+        if(algorithm){
+            long t0 = System.currentTimeMillis();
+            // Calculate neighbours distances
+            cellIndexMethod();
+            long delta = System.currentTimeMillis()-t0;
+            return delta;
+        }else{
+            return 0;
         }
     }
 
@@ -212,5 +229,13 @@ public class SimulationHandler {
 
     public void setM(int m) {
         M = m;
+    }
+
+    public boolean isTest() {
+        return test;
+    }
+
+    public void setTest(boolean test) {
+        this.test = test;
     }
 }

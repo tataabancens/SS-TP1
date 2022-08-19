@@ -29,4 +29,15 @@ public class ParticleFormatUtil {
             arr.add(jsParticle);
         }
         return arr.toJSONString();
-    }}
+    }
+
+    public static String testResultToCsvFormat(int[] particleCount, long[] times) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("N,time1,time2,time3,time4\n");
+        for (int i = 0; i < particleCount.length; i++) {
+            sb.append(particleCount[i]).append(',').append(times[i]).append("\n");
+        }
+        return sb.toString();
+    }
+}
+
